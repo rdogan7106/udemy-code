@@ -9,6 +9,7 @@ console.log(age);
 
 function pension(birthYear, name){
     let age = calculateAge(birthYear);
+
     let pension = 65 - age;
     if(pension > 0){
         console.log(`${pension} Your retirement period has not expired ${name}`)
