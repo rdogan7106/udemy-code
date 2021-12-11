@@ -38,6 +38,19 @@ UI.prototype.deleteCourse = function(element){
         element.parentElement.parentElement.remove();
     }
 }
+UI.prototype.showAlert = function (message,className){
+        let alert = `
+                <div class ='alert alert-${className}'>
+                    ${message}
+                </div>
+        `;
+    const row = querySelector('.row');
+    //beforeBegin, afterBegin, beforeEnd, afterEnd 
+    row.insertAdjacentHTML('beforeBegin',alert)
+    setTimeout(()=>{
+        querySelector('.alert').remove()
+    },1500)
+}
 
 const newCourse = querySelector('#new-course');
 newCourse.addEventListener('click',function(e){
@@ -49,14 +62,26 @@ newCourse.addEventListener('click',function(e){
     const course = new Course(title,instructor,image);
     //create UI
     const ui = new UI();
-    //add course to List
-    ui.addCourseToList(course);
-    //clear controls
-    ui.clearControls();
+    if(title ==='' ||instructor===''|| image===''){
+        ui.showAlert('Please complete the form','warning')
+    }
+    else{
+        //add course to List
+        ui.addCourseToList(course);
+        //clear controls
+        ui.clearControls();
+        ui.showAlert('the course has been added','success')
+
+    }
+
+
+ 
 
     e.preventDefault();
 })
 querySelector('#course-list').addEventListener('click',function(e){
    const ui = new UI();
    ui.deleteCourse(e.target);
+   ui.showAlert('the course has been deleted','danger')
+
 })
