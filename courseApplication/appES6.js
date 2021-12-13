@@ -6,6 +6,7 @@
  function querySelector(pString){
     return document.querySelector(pString);
 }
+//Course Class
 class Course{
     constructor(title,instructor,image){
         this.title = title;
@@ -13,6 +14,7 @@ class Course{
         this.image = image;
     }
 }
+//UI Class
 class UI{
     addCourseToList(course){
         const list = querySelector('#course-list');
@@ -51,6 +53,44 @@ class UI{
         },1500)
         }
 }
+// Storage Class
+class Storage{
+    static getCourses(){
+        let courses;
+        if(localStorage.getItem('courses')===null){
+            courses =[];
+
+        }
+        else{
+            courses = JSON.parse(localStorage.getItem('courses'))
+        }
+        return courses;
+
+    }
+
+    static displayCourses(){
+        const courses = Storage.getCourses();
+        courses.forEach(course => {
+            const ui = new UI();
+            ui.addCourseToList(course)
+        });
+
+    }
+    static addCourse(course){
+        const courses = Storage.getCourses();
+        courses.push(course);
+        localStorage.setItem('courses',JSON.stringify(courses));
+    }
+
+    static deleteCourse(){
+
+    }
+}
+
+document.addEventListener('DOMContentLoaded',Storage.displayCourses);
+
+
+
 const newCourse = querySelector('#new-course');
 newCourse.addEventListener('click',function(e){
     const title = querySelector('#title').value;
@@ -67,6 +107,9 @@ newCourse.addEventListener('click',function(e){
     else{
         //add course to List
         ui.addCourseToList(course);
+        //save to local Storage
+        Storage.addCourse(course)
+
         //clear controls
         ui.clearControls();
         ui.showAlert('the course has been added','success')
@@ -77,7 +120,11 @@ newCourse.addEventListener('click',function(e){
 })
 querySelector('#course-list').addEventListener('click',function(e){
    const ui = new UI();
+   //delete Course
    ui.deleteCourse(e.target);
+    // delete form local Storage
+
+    Storage.deleteCourse();
    ui.showAlert('the course has been deleted','danger')
 
 })
