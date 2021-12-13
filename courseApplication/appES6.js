@@ -61,13 +61,11 @@ class Storage{
         let courses;
         if(localStorage.getItem('courses')===null){
             courses =[];
-
         }
         else{
             courses = JSON.parse(localStorage.getItem('courses'))
         }
         return courses;
-
     }
 
     static displayCourses(){
@@ -76,7 +74,6 @@ class Storage{
             const ui = new UI();
             ui.addCourseToList(course)
         });
-
     }
     static addCourse(course){
         const courses = Storage.getCourses();
@@ -89,7 +86,7 @@ class Storage{
             const id  = element.getAttribute('data-id');
             const courses = Storage.getCourses();
             courses.forEach((course,index)=>{
-                if(courses.courseId ==id){
+                if(course.courseId == id){
                     courses.splice(index,1);
                 }
             });
@@ -103,7 +100,7 @@ document.addEventListener('DOMContentLoaded',Storage.displayCourses);
 
 
 const newCourse = querySelector('#new-course');
-newCourse.addEventListener('click',function(e){
+newCourse.addEventListener('submit',function(e){
     const title = querySelector('#title').value;
     const instructor = querySelector('#instructor').value;
     const image = querySelector('#image').value;
@@ -132,10 +129,9 @@ newCourse.addEventListener('click',function(e){
 querySelector('#course-list').addEventListener('click',function(e){
    const ui = new UI();
    //delete Course
-   if(ui.deleteCourse(e.target)==true);
-    // delete form local Storage
-
+   if(ui.deleteCourse(e.target)==true)     
+{  // delete form local Storage
     Storage.deleteCourse(e.target);
-   ui.showAlert('the course has been deleted','danger')
+   ui.showAlert('the course has been deleted','danger')}
 
 })
