@@ -9,6 +9,7 @@
 //Course Class
 class Course{
     constructor(title,instructor,image){
+        this.courseId = Math.floor(Math.random()*10000);
         this.title = title;
         this.instructor = instructor;
         this.image = image;
@@ -23,7 +24,7 @@ class UI{
                     <td><img src="./img/${course.image}"></td>
                     <td>${course.title}</td>
                     <td>${course.instructor}</td>
-                    <td><a href ='#' class ='btn btn-danger btn-sm delete'>Delete</a></td>
+                    <td><a href ='#' data-id ='${course.courseId}' class ='btn btn-danger btn-sm delete'>Delete</a></td>
                 </tr>
             `
             list.innerHTML += html;
@@ -37,6 +38,7 @@ class UI{
     deleteCourse(element){
         if(element.classList.contains('delete')){
             element.parentElement.parentElement.remove();
+            return true;
         }
     }
     showAlert(message,className){
@@ -82,8 +84,17 @@ class Storage{
         localStorage.setItem('courses',JSON.stringify(courses));
     }
 
-    static deleteCourse(){
-
+    static deleteCourse(element){
+        if(element.classList.contains('delete')){
+            const id  = element.getAttribute('data-id');
+            const courses = Storage.getCourses();
+            courses.forEach((course,index)=>{
+                if(courses.courseId ==id){
+                    courses.splice(index,1);
+                }
+            });
+            localStorage.setItem('courses',JSON.stringify(courses))
+        }
     }
 }
 
@@ -121,10 +132,10 @@ newCourse.addEventListener('click',function(e){
 querySelector('#course-list').addEventListener('click',function(e){
    const ui = new UI();
    //delete Course
-   ui.deleteCourse(e.target);
+   if(ui.deleteCourse(e.target)==true);
     // delete form local Storage
 
-    Storage.deleteCourse();
+    Storage.deleteCourse(e.target);
    ui.showAlert('the course has been deleted','danger')
 
 })
