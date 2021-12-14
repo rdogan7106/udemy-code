@@ -1,0 +1,34 @@
+{
+ "Myfamily":   [
+        {
+            "name" :"Rahman",
+            "lastName" :"Dogan",
+            "age" :31,
+            "father":true
+        },
+        {
+            "name" :"Zehra",
+            "lastName" :"Dogan",
+            "age" :6
+        },
+        {
+            "name" :"Selim",
+            "lastName" :"Dogan",
+            "age" :1
+        }
+        
+    ],
+    "scholl":"Lund University",
+    "city":"Lund ",
+    "country":"Sweden",
+    "lesson":[
+        {
+        "lessonName" :"Web Programming",
+        "lessonHour" :5
+        },
+        {
+            "lessonName" :"Data Science",
+            "lessonHour" :4
+        }
+    ]
+}

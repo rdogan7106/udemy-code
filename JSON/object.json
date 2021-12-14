@@ -1,0 +1,13 @@
+
+{   
+     "name":"Rahman",
+     "lastName":"Dogan",
+     "Age":31,
+     "skilss": ["javaScript","Java","HTML","CSS","Cucumber","TestNG","Selenium","React","Angular","MySQL","Node.js"],
+     "jobs":{
+         "job1" : "Computer Science",
+         "job2" : "Web Developer"
+     },
+     "openToWork" : true,
+     "company" : null
+}
