@@ -1,0 +1,17 @@
+[   {
+        "firstName":"Zehra",
+        "lastName":"Dogan",
+        "age": 6,
+        "retired" :false
+    },{
+        "firstName":"Rahman",
+        "lastName":"Dogan",
+        "age": 31,
+        "retired" :false
+    },{
+        "firstName":"Selim",
+        "lastName":"Dogan",
+        "age": 1,
+        "retired" :false
+    }
+]
