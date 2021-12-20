@@ -25,6 +25,15 @@ const ProductController = (function(){
         getData : function(){
             return data;
         },
+        getProductById :function(id){
+            let product = null
+            data.products.forEach(prd =>{
+                if(prd.id == id){
+                    product = prd;
+                }
+            })
+            return product
+        },
         addProduct :function(name,price){
             let id;
             if(data.products.length>0){
@@ -68,10 +77,8 @@ const UIController = (function(){
                         <td>${prd.id}</td>
                         <td>${prd.name}</td>
                         <td>${prd.price} $</td>                        
-                        <td class="text-end">
-                            <button type="submit" class="btn btn-warning mt-2">
-                                <i class="fas fa-edit"></i> 
-                            </button>
+                        <td class="text-end">                           
+                           <i class="fas fa-edit edit-product"></i>                             
                         </td>
                      </tr>`
             });
@@ -92,9 +99,7 @@ const UIController = (function(){
                         <td>${prd.name}</td>
                         <td>${prd.price} $</td>                        
                         <td class="text-end">
-                            <button type="submit" class="btn btn-warning mt-2">
-                                <i class="fas fa-edit"></i> 
-                            </button>
+                            <i class="fas fa-edit edit-product"></i> 
                         </td>
                      </tr>`
             document.querySelector(Selectors.productList).innerHTML +=item            
@@ -122,6 +127,10 @@ const AppController = (function(ProductCtrl,UICtrl){
     const loadEventListener = function(){
         //add product event
         document.querySelector(UISelectors.addButton).addEventListener('click',productAddSubmit)
+    
+        //edit product
+
+        document.querySelector(UISelectors.productList).addEventListener('click',productEditSubmit)
     }
     const productAddSubmit =  function(e){
         const productName = document.querySelector(UISelectors.productName).value;
@@ -142,6 +151,20 @@ const AppController = (function(ProductCtrl,UICtrl){
         }
         e.preventDefault();
     }
+
+    const productEditSubmit = function(e){
+        if(e.target.classList.contains('edit-product')){
+          const id=e.target.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.textContent
+          //get Selecterd Product
+         const procut =  ProductController.getProductById(id)
+         console.log(procut)
+        }
+
+
+
+        e.preventDefault();
+    } 
+
     return{
         init : function(){
             console.log('starting app...');
