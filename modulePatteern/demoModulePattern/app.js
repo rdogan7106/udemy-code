@@ -34,7 +34,15 @@ const ProductController = (function(){
             }
             const newProduct = new Product(id,name,parseFloat(price));
             data.products.push(newProduct);
-            return newProduct;
+            return newProduct
+        },
+        getTotal :function(){
+            let total =0;
+            data.products.forEach(function(item){
+                total +=item.price;
+            })
+            data.totalPrice = total
+            return data.totalPrice
         }
     }
 })();
@@ -47,7 +55,9 @@ const UIController = (function(){
         addButton : '#addBtn',
         productName: '#productName',
         productPrice :'#productPrice', 
-        productCard :'#productCard'
+        productCard :'#productCard',
+        totalTl: '#totalTl',
+        totalDolar:'#totalDolar'
     }
     return {
         createProductList :function(products){
@@ -95,6 +105,10 @@ const UIController = (function(){
         },
         hideCard :function(){
             document.querySelector(Selectors.productCard).style.display = 'none';
+        },
+        showTotal : function(total){
+            document.querySelector(Selectors.totalDolar).textContent = total;
+            document.querySelector(Selectors.totalTl).textContent = total * 17.25;
         }
     }
 
@@ -112,12 +126,17 @@ const AppController = (function(ProductCtrl,UICtrl){
     const productAddSubmit =  function(e){
         const productName = document.querySelector(UISelectors.productName).value;
         const productPrice = document.querySelector(UISelectors.productPrice).value;
-        //console.log(productName,productPrice)
+        console.log(productName,productPrice)
         if(productName!=='' && productPrice!==''){
             //Add product
            const newProduct = ProductController.addProduct(productName,productPrice);
             // add item to list
            UIController.addProduct(newProduct)
+           //get Total
+           const total = ProductController.getTotal()
+           console.log(total)
+           //show Total
+           UIController.showTotal(total)
           // Clear Input
            UIController.clearInput();
         }
